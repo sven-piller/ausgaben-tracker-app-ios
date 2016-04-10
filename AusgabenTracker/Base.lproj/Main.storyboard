@@ -9,7 +9,7 @@
         <!--Liste-->
         <scene sceneID="hNz-n2-bh7">
             <objects>
-                <viewController id="9pv-A4-QxB" customClass="FirstViewController" customModule="AusgabenTracker" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="9pv-A4-QxB" customClass="FirstViewController" customModule="AusgabenTracker" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="hAM-uq-Bcg"/>
                         <viewControllerLayoutGuide type="bottom" id="u9F-61-sCE"/>
@@ -51,21 +51,24 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Liste" id="3Fw-sA-dTp">
-                        <barButtonItem key="rightBarButtonItem" systemItem="compose" id="Mnp-QR-n5x"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="compose" id="Mnp-QR-n5x">
+                            <connections>
+                                <segue destination="CHX-nB-B0Q" kind="show" identifier="AddItemSegue" id="VvQ-qD-FEI"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="3IG-Kk-x76" id="XgT-1g-Zme"/>
-                        <segue destination="Fqw-bl-289" kind="show" id="d7l-Vg-fIy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1582" y="-634"/>
         </scene>
-        <!--View Controller-->
+        <!--Add Item View Controller-->
         <scene sceneID="mkV-D4-pM5">
             <objects>
-                <viewController id="CHX-nB-B0Q" sceneMemberID="viewController">
+                <viewController id="CHX-nB-B0Q" customClass="AddItemViewController" customModule="AusgabenTracker" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="viE-Vr-6sY"/>
                         <viewControllerLayoutGuide type="bottom" id="Bmz-0M-RPq"/>
@@ -73,13 +76,45 @@
                     <view key="view" contentMode="scaleToFill" id="ZXh-kW-Z1h">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tdp-ZR-NfR">
+                                <rect key="frame" x="131" y="162" width="97" height="30"/>
+                                <accessibility key="accessibilityConfiguration" hint="Posten" identifier="content" label="Posten"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zEZ-ds-W0A">
+                                <rect key="frame" x="131" y="217" width="97" height="30"/>
+                                <accessibility key="accessibilityConfiguration" hint="Verkäufer" identifier="merchant" label="Verkäufer"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gVO-2i-2Ze">
+                                <rect key="frame" x="131" y="273" width="97" height="30"/>
+                                <accessibility key="accessibilityConfiguration" hint="Preis" identifier="amount" label="Preis"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qzS-WN-O2E">
+                                <rect key="frame" x="131" y="332" width="97" height="30"/>
+                                <state key="normal" title="Speichern"/>
+                                <connections>
+                                    <action selector="saveButton:" destination="CHX-nB-B0Q" eventType="primaryActionTriggered" id="e15-Vv-JkE"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="Z0C-WG-Qcn"/>
+                    <connections>
+                        <outlet property="amountField" destination="gVO-2i-2Ze" id="yg5-1G-xon"/>
+                        <outlet property="contentField" destination="tdp-ZR-NfR" id="xn4-bk-xmX"/>
+                        <outlet property="merchantField" destination="zEZ-ds-W0A" id="b4D-jL-xN4"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T49-Y8-qnv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3092" y="-623"/>
+            <point key="canvasLocation" x="2396" y="-627"/>
         </scene>
         <!--Statistik-->
         <scene sceneID="wg7-f3-ORb">
@@ -133,24 +168,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HuB-VB-40B" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="0.0" y="0.0"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="sKt-fd-TyN">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Fqw-bl-289" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="dGL-X6-jVb">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="CHX-nB-B0Q" kind="relationship" relationship="rootViewController" id="EqV-1N-8Zc"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="rxd-4O-TbX" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2338" y="-634"/>
         </scene>
         <!--Liste-->
         <scene sceneID="84C-YN-60U">
