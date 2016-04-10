@@ -15,6 +15,10 @@ class AddItemViewController: UIViewController{
     @IBOutlet weak var merchantField: UITextField!
     @IBOutlet weak var contentField: UITextField!
 
+    @IBAction func backButton(sender: AnyObject){
+        self.navigationController!.popViewControllerAnimated(true)
+    }
+
     @IBAction func saveButton(sender: AnyObject) {
         Alamofire.request(
             .POST,
