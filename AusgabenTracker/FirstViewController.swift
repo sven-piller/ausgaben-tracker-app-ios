@@ -15,6 +15,7 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
     var jsonArray: NSMutableArray?
     var newArray: Array<String> = []
+    var IDArray: Array<String> = []
 
 
     override func viewDidLoad() {
@@ -42,7 +43,22 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
         return cell
     }
 
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .Delete {
+            print("ID is \(self.IDArray[indexPath.row])")
+            let url = "http://192.168.1.99:1337/api/expenses/\(self.IDArray[indexPath.row])"
+            print(url)
+            Alamofire.request(.DELETE, url)
+            self.downloadAndUpdate()
+        } else if editingStyle == .Insert {
+            // Create new Instance and save
+        }
+    }
+
     func downloadAndUpdate() {
+        self.newArray.removeAll()
+        self.IDArray.removeAll()
+
         Alamofire.request(.GET, "http://192.168.1.99:1337/api/expenses").responseJSON { response in
             // print(response.request)
             // print(response.response)
@@ -51,11 +67,11 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
             if let JSON = response.result.value {
                 //print( "JSON: \(JSON)")
-                self.newArray = []
                 self.jsonArray = JSON as? NSMutableArray
 
                 for item in self.jsonArray! {
                     //print(item["content"])
+                    let ID = item["_id"]!
                     let strContent = item["content"]! as? String
                     let strMerchant = item["merchant"]! as? String
                     let strPreis = item["amount"] as? String
@@ -63,6 +79,7 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
                     print("String is \(string)")
                     self.newArray.append(string)
+                    self.IDArray.append(ID! as! String)
                 }
                 print("New Array is \(self.newArray)")
                 self.tableView.reloadData()
