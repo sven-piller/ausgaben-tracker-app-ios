@@ -12,43 +12,21 @@ import Alamofire
 class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
+
     var jsonArray: NSMutableArray?
     var newArray: Array<String> = []
-
-
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        Alamofire.request(.GET, "http://192.168.1.99:1337/api/expenses")
-            .responseJSON { response in
-                // print(response.request)
-                // print(response.response)
-                // print(response.data)
-                // print(response.result)
-
-                if let JSON = response.result.value {
-                    //print( "JSON: \(JSON)")
-
-                    self.jsonArray = JSON as? NSMutableArray
-                    for item in self.jsonArray! {
-                        //print(item["content"])
-                        let strContent = item["content"]! as? String
-                        let strMerchant = item["merchant"]! as? String
-                        let strPreis = item["amount"] as? String
-                        let string =  strContent! + " ( " + strMerchant! + " ): " + strPreis!
-
-                        print("String is \(string)")
-                        self.newArray.append(string )
-                    }
-                    print("New Array is \(self.newArray)")
-                    self.tableView.reloadData()
-                }
-        }
 
         self.tableView.dataSource = self
         self.tableView.delegate = self
+    }
+
+    override func viewWillAppear(animated: Bool) {
+        self.downloadAndUpdate()
     }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -62,6 +40,34 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
         cell.textLabel?.text = self.newArray[indexPath.row]
         return cell
+    }
+
+    func downloadAndUpdate() {
+        Alamofire.request(.GET, "http://192.168.1.99:1337/api/expenses").responseJSON { response in
+            // print(response.request)
+            // print(response.response)
+            // print(response.data)
+            // print(response.result)
+
+            if let JSON = response.result.value {
+                //print( "JSON: \(JSON)")
+                self.newArray = []
+                self.jsonArray = JSON as? NSMutableArray
+
+                for item in self.jsonArray! {
+                    //print(item["content"])
+                    let strContent = item["content"]! as? String
+                    let strMerchant = item["merchant"]! as? String
+                    let strPreis = item["amount"] as? String
+                    let string =  strContent! + " (" + strMerchant! + "): " + strPreis!
+
+                    print("String is \(string)")
+                    self.newArray.append(string)
+                }
+                print("New Array is \(self.newArray)")
+                self.tableView.reloadData()
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {
