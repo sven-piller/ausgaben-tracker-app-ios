@@ -14,6 +14,8 @@ class AddItemViewController: UIViewController{
     @IBOutlet weak var amountField: UITextField!
     @IBOutlet weak var merchantField: UITextField!
     @IBOutlet weak var contentField: UITextField!
+    var ip = "192.168.1.110"
+    //var ip = "192.168.1.99"
 
     @IBAction func backButton(sender: AnyObject){
         self.navigationController!.popViewControllerAnimated(true)
@@ -22,7 +24,7 @@ class AddItemViewController: UIViewController{
     @IBAction func saveButton(sender: AnyObject) {
         Alamofire.request(
             .POST,
-            "http://192.168.1.99:1337/api/expenses",
+            "http://\(self.ip):1337/api/expenses",
             parameters: [
                 "amount": self.amountField.text!,
                 "merchant": self.merchantField.text!,

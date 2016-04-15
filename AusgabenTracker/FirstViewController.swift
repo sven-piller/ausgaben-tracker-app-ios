@@ -16,6 +16,8 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
     var jsonArray: NSMutableArray?
     var newArray: Array<String> = []
     var IDArray: Array<String> = []
+    var ip = "192.168.1.110"
+    //var ip = "192.168.1.99"
 
 
     override func viewDidLoad() {
@@ -46,7 +48,7 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
             print("ID is \(self.IDArray[indexPath.row])")
-            let url = "http://192.168.1.99:1337/api/expenses/\(self.IDArray[indexPath.row])"
+            let url = "http://\(self.ip):1337/api/expenses/\(self.IDArray[indexPath.row])"
             print(url)
             Alamofire.request(.DELETE, url)
             self.downloadAndUpdate()
@@ -59,7 +61,7 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.newArray.removeAll()
         self.IDArray.removeAll()
 
-        Alamofire.request(.GET, "http://192.168.1.99:1337/api/expenses").responseJSON { response in
+        Alamofire.request(.GET, "http://\(self.ip):1337/api/expenses").responseJSON { response in
             // print(response.request)
             // print(response.response)
             // print(response.data)
