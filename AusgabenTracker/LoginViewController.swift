@@ -1,5 +1,5 @@
 //
-//  SecondViewController.swift
+//  LoginViewController.swift
 //  AusgabenTracker
 //
 //  Created by LEOS Develop on 09.04.16.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SecondViewController: UIViewController {
+class LoginViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
