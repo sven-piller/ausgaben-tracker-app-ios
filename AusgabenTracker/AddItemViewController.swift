@@ -17,11 +17,11 @@ class AddItemViewController: UIViewController{
     var ip = "192.168.1.110"
     //var ip = "192.168.1.99"
 
-    @IBAction func backButton(sender: AnyObject){
-        self.navigationController!.popViewControllerAnimated(true)
+    @IBAction func backButton(_ sender: AnyObject){
+        self.navigationController!.popViewController(animated: true)
     }
 
-    @IBAction func saveButton(sender: AnyObject) {
+    @IBAction func saveButton(_ sender: AnyObject) {
         Alamofire.request(
             .POST,
             "http://\(self.ip):1337/api/expenses",
@@ -30,7 +30,7 @@ class AddItemViewController: UIViewController{
                 "merchant": self.merchantField.text!,
                 "content": self.contentField.text!
             ])
-        self.navigationController!.popViewControllerAnimated(true)
+        self.navigationController!.popViewController(animated: true)
     }
 
     override func viewDidLoad() {
